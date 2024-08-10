@@ -73,6 +73,16 @@ export async function getPosts() {
     throw error;
   }
 }
+export async function getPost(pid) {
+  try {
+    const response = await call('/library/content/'+pid, 'GET');
+    return new Post(response.pid, response.title, response.content, response.likes);
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+    throw error;
+  }
+}
+
 
 export async function createPost(postData) {
   try {

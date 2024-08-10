@@ -1,8 +1,9 @@
 import { useState, useCallback } from 'react';
-import { getPosts, createPost } from '../config/api';
+import { getPosts, createPost, getPost } from '../config/api';
 
 export function usePostViewModel() {
   const [posts, setPosts] = useState([]);
+  const [currentPost, setCurrentPost] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -12,6 +13,19 @@ export function usePostViewModel() {
     try {
       const fetchedPosts = await getPosts();
       setPosts(fetchedPosts);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const fetchPost = useCallback(async (pid) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const fetchedPost = await getPost(pid);
+      setCurrentPost(fetchedPost);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -32,9 +46,11 @@ export function usePostViewModel() {
 
   return {
     posts,
+    currentPost,
     loading,
     error,
     fetchPosts,
+    fetchPost,
     addPost
   };
 }
