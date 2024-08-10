@@ -4,11 +4,11 @@ let backendHost;
 
 const hostname = window && window.location && window.location.hostname;
 
-if (hostname === "api.a.com") {
-  backendHost = "https://api.a.com";
-}
-else if(hostname === "localhost") {
+if(hostname === "localhost") {
   backendHost = "http://localhost:8080";
+}
+else{
+  backendHost = "https://api.a.com";
 }
 
 export const API_BASE_URL = `${backendHost}`;

@@ -1,0 +1,75 @@
+.post-list {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .post-list h2 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .post-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .post-table th,
+  .post-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+  }
+  
+  .post-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  
+  .post-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .post-table tr:hover {
+    background-color: #f5f5f5;
+  }
+  
+  .post-table a {
+    color: #1a0dab;
+    text-decoration: none;
+  }
+  
+  .post-table a:hover {
+    text-decoration: underline;
+  }
+  
+  .like-button {
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .like-button:hover {
+    background-color: #45a049;
+  }
+  
+  .like-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+  
+  .loading, .error {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 18px;
+  }
+  
+  .error {
+    color: #ff0000;
+  }

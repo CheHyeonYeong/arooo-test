@@ -21,24 +21,40 @@ function PostListView() {
     }
   }, [updateLikes, updatingLikes]);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (loading) return <div className="loading">Loading...</div>;
+  if (error) return <div className="error">Error: {error}</div>;
 
   return (
-    <div>
+    <div className="post-list">
       <h2>Posts</h2>
-      {posts.map(post => (
-        <div key={post.pid}>
-          <Link to={`/post/${post.pid}`}>{post.title}</Link>
-          <p>Likes: {post.likes}</p>
-          <button 
-            onClick={() => handleLike(post)} 
-            disabled={updatingLikes[post.pid]}
-          >
-            {updatingLikes[post.pid] ? 'Updating...' : 'Like'}
-          </button>
-        </div>
-      ))}
+      <table className="post-table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Likes</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {posts.map(post => (
+            <tr key={post.pid}>
+              <td>
+                <Link to={`/post/${post.pid}`}>{post.title}</Link>
+              </td>
+              <td>{post.likes}</td>
+              <td>
+                <button 
+                  onClick={() => handleLike(post)} 
+                  disabled={updatingLikes[post.pid]}
+                  className="like-button"
+                >
+                  {updatingLikes[post.pid] ? 'Updating...' : '👍 Like'}
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
