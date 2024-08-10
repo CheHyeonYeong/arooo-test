@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { getPosts, createPost, getPost } from '../config/api';
+import { getPosts, createPost, getPost, likesUpdate } from '../config/api';
 
 export function usePostViewModel() {
   const [posts, setPosts] = useState([]);
@@ -44,6 +44,24 @@ export function usePostViewModel() {
     }
   }, []);
 
+  const updateLikes = useCallback(async (post) => {
+    try {
+      const updatedPost = await likesUpdate(post);
+      setPosts(prevPosts => 
+        prevPosts.map(p => 
+          p.pid === updatedPost.pid ? { ...p, likes: updatedPost.likes } : p
+        )
+      );
+      if (currentPost && currentPost.pid === updatedPost.pid) {
+        setCurrentPost(updatedPost);
+      }
+      return updatedPost;
+    } catch (err) {
+      setError(err.message);
+      throw err;
+    }
+  }, [currentPost]);
+
   return {
     posts,
     currentPost,
@@ -51,6 +69,7 @@ export function usePostViewModel() {
     error,
     fetchPosts,
     fetchPost,
-    addPost
+    addPost,
+    updateLikes
   };
 }

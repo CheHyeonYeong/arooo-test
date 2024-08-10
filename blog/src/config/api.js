@@ -67,12 +67,13 @@ export function call(api, method, request) {
 export async function getPosts() {
   try {
     const response = await call('/library/content', 'GET');
-    return response.map(post => new Post(post.pid, post.title, post.content, post.likes));
+    return response.map(post => new Post(post.pid, post.title,post.content, post.likes));
   } catch (error) {
     console.error('Error fetching posts:', error);
     throw error;
   }
 }
+
 export async function getPost(pid) {
   try {
     const response = await call('/library/content/'+pid, 'GET');
@@ -83,11 +84,20 @@ export async function getPost(pid) {
   }
 }
 
-
 export async function createPost(postData) {
   try {
     const response = await call('/api/posts', 'POST', postData);
     return new Post(response.pid, response.title, response.content, response.likes);
+  } catch (error) {
+    console.error('Error creating post:', error);
+    throw error;
+  }
+}
+
+export async function likesUpdate(post) {
+  try {
+    const response = await call('/library/content/'+post.pid+'/like', 'POST');
+    return new Post(post.pid, post.title, post.content, response.likes);
   } catch (error) {
     console.error('Error creating post:', error);
     throw error;

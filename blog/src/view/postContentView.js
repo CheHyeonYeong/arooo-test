@@ -1,16 +1,22 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { usePostViewModel } from '../viewmodel/postViewModel.js';
 
 function PostContentView() {
   const { pid } = useParams();
-  const { currentPost, loading, error, fetchPost } = usePostViewModel();
+  const { currentPost, loading, error, fetchPost, updateLikes } = usePostViewModel();
 
   useEffect(() => {
     if (pid) {
       fetchPost(pid);
     }
-  }, [pid, fetchPost]);
+  }, [pid]); // Removed fetchPost from dependencies
+
+  const handleLike = useCallback(async () => {
+    if (currentPost) {
+      await updateLikes(currentPost);
+    }
+  }, [currentPost, updateLikes]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -21,6 +27,9 @@ function PostContentView() {
       <h2>{currentPost.title}</h2>
       <p>{currentPost.content}</p>
       <p>Likes: {currentPost.likes}</p>
+      <button onClick={handleLike} disabled={loading}>
+        {loading ? 'Updating...' : 'Like'}
+      </button>
     </div>
   );
 }
