@@ -55,6 +55,14 @@ npm start
 ### Backend
 - MySql 연동 후, run 해주시길 바라겠습니다.
 
+- MySQL 설정
+  ```
+     create database arooo;
+     use arooo;
+     create user tree identified by 'tree123';
+     GRANT ALL PRIVILEGES ON `arooo`.* TO `tree`@`%`;
+  ```
+
 
 ## 기술 스택
 
