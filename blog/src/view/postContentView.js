@@ -14,7 +14,7 @@ function PostContentView() {
 
   const handleLike = useCallback(async () => {
     if (currentPost) {
-      await updateLikes(currentPost);
+      await updateLikes(currentPost);  // 비동기 통신
     }
   }, [currentPost, updateLikes]);
 
